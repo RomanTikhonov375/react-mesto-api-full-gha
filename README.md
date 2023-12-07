@@ -9,8 +9,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 158.160.134.200;
 
-Frontend https://...
+Frontend https://romantikhonov.mesto.nomoredomainsmonster.ru
 
-Backend https://...
+Backend https://api.romantikhonov.mesto.nomoredomainsmonster.ru
