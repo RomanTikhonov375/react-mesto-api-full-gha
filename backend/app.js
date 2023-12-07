@@ -10,7 +10,7 @@ import errorHandler from './utils/errors/errorHandler';
 import cors from 'cors';
 import { requestLogger, errorLogger } from './middlewares/logger';
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 const { DB_CONN = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 config();
 const app = express();
