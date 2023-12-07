@@ -41,16 +41,7 @@ function App() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [headingText, setHeadingText] = useState('')
 
-  useEffect(() => {
 
-    api.getInitialCards()
-      .then(setCards).catch(console.error);
-  }, []);
-
-  useEffect(() => {
-    api.getUserInfo()
-      .then(setCurrentUser).catch(console.error);
-  }, [])
 
   function handleAddPlaceSubmit({ name, link }) {
     function makeRequest() {
@@ -114,9 +105,15 @@ function App() {
   }
 
   // Проверка авторизации 
-  function auth(jwt) {
-    checkToken(jwt)
+
+
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    
+    if (jwt) {
+      checkToken(jwt)
       .then(() => {
+        setUserEmail(JSON.stringify(localStorage.getItem('email')).replace(/\"/g, ""));
         setLoggedIn(true)
         navigate('/')
       })
@@ -128,14 +125,12 @@ function App() {
         }
         navigate('/sign-in')
       })
-  }
-
-  useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    setUserEmail(JSON.stringify(localStorage.getItem('email')).replace(/\"/g, ""));
-    if (jwt) auth(jwt);
-
-  }, [])
+    };
+    api.getInitialCards()
+    .then(setCards).catch(console.error);
+     api.getUserInfo()
+    .then(setCurrentUser).catch(console.error);
+  },[navigate,loggedIn])
 
 
   // Колбэк для логина пользователя

@@ -1,8 +1,11 @@
 
- export class Api {
-    constructor({ baseUrl, headers }) {
+function getToken() {
+    const token = localStorage.getItem('jwt');
+    return token;
+}
+export class Api {
+    constructor({ baseUrl }) {
         this.baseUrl = baseUrl;
-        this.headers = headers;
     }
 
 
@@ -24,86 +27,105 @@
     //Метод для запроса карточек с сервера
     getInitialCards() {
         return this._request(`/cards`, {
-            headers: this.headers
+            headers: {
+                authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json'
+            }
         })
     }
 
     //Метод для запроса текущего пользователя с сервера
     getUserInfo() {
         return this._request(`/users/me`, {
-            headers: this.headers
+            headers: {
+                authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json'
+            }
         })
     }
 
     //Метод для обновления данных пользователя на сервере
-    editingProfile({name, about}) {
+    editingProfile({ name, about }) {
         return this._request(`/users/me`, {
-            headers: this.headers,
+            headers: {
+                authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json'
+            },
             method: 'PATCH',
             body: JSON.stringify({
                 name: name,
                 about: about
             })
         })
-        }
+    }
 
     //Метод для добавления карточки пользователя на сервер
-    setUserCard({name, link}) {
+    setUserCard({ name, link }) {
         return this._request(`/cards`, {
-            headers: this.headers,
+            headers: {
+                authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json'
+            },
             method: 'POST',
-                headers: this.headers,
-                body: JSON.stringify({
-                    name: name,
-                    link: link
-                })
+            body: JSON.stringify({
+                name: name,
+                link: link
+            })
         })
-        }
+    }
 
     //Метод для удаления карточки пользователя с сервера
     deleteCard(id) {
         return this._request(`/cards/${id}/`, {
-            headers: this.headers,
+            headers: {
+                authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json'
+            },
             method: 'DELETE',
         })
-        }
+    }
 
     //Метод для добавления лайка пользователя на сервер
-    changeLikeCardStatus(id , isLiked) {
-        if (!isLiked) 
-            { return this._request(`/cards/${id}/likes`, {
-                headers: this.headers,
-             method: 'PUT',
-         }) } else  {
+    changeLikeCardStatus(id, isLiked) {
+        if (!isLiked) {
             return this._request(`/cards/${id}/likes`, {
-                headers: this.headers,
+                headers: {
+                    authorization: `Bearer ${getToken()}`,
+                    'Content-Type': 'application/json'
+                },
+                method: 'PUT',
+            })
+        } else {
+            return this._request(`/cards/${id}/likes`, {
+                headers: {
+                    authorization: `Bearer ${getToken()}`,
+                    'Content-Type': 'application/json'
+                },
                 method: 'DELETE',
             })
-         }
         }
+    }
 
 
     //Метод для изменения аватара пользователя на сервере
     setAvatar(url) {
         return this._request(`/users/me/avatar`, {
-            headers: this.headers,
+            headers: {
+                authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json'
+            },
             method: 'PATCH',
             body: JSON.stringify({
                 avatar: url
             })
         })
-        }
+    }
 
 }
 
-const token = localStorage.getItem('jwt');
 
- const api = new Api({
-    baseUrl: 'http://api.romantikhonov.mesto.nomoredomainsmonster.ru',
-    headers: {
-        authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-    }
+const api = new Api({
+    baseUrl: 'https://api.romantikhonov.mesto.nomoredomainsmonster.ru',
 });
 
 export default api;

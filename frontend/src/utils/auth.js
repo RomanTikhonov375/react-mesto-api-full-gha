@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://api.romantikhonov.mesto.nomoredomainsmonster.ru'
+export const BASE_URL = 'https://api.romantikhonov.mesto.nomoredomainsmonster.ru'
 
 
 const checkResponse = (res) => {
