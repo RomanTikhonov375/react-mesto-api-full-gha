@@ -27,6 +27,9 @@ app.get('/crash-test', () => {
   }, 0);
 });
 app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*")
+}) 
 app.use(router);
 app.use(errorLogger);
 app.use((req, res) => {
