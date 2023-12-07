@@ -14,7 +14,7 @@ const { PORT = 3000 } = process.env;
 const { DB_CONN = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 config();
 const app = express();
-app.use(cors());
+
 app.use(helmet());
 app.use(limiter);
 
@@ -26,6 +26,7 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+app.use(cors());
 app.use(router);
 app.use(errorLogger);
 app.use((req, res) => {
