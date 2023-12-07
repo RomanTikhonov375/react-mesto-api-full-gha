@@ -39,7 +39,6 @@ export const deleteCard = async (req, res, next) => {
   try {
     const { id } = req.params;
     const card = await Card.findById({ _id: id });
-    card.populate(['likes', 'owner']);
     if (!card) {
       throw new NotFoundError('Карточка по id не найдена');
     }
@@ -63,7 +62,6 @@ export const likeCard = async (req, res, next) => {
       { $addToSet: { likes: req.user._id } },
       { new: true },
     );
-    card.populate(['likes', 'owner']);
     if (!card) {
       throw new NotFoundError('Карточка по id не найдена');
     }
@@ -83,7 +81,6 @@ export const deleteLike = async (req, res, next) => {
       { $pull: { likes: req.user._id } },
       { new: true },
     );
-    card.populate(['likes', 'owner']);
     if (!card) {
       throw new NotFoundError('Карточка по id не найдена');
     }
