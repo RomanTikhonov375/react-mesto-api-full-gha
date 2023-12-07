@@ -7,7 +7,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.134.200;
+IP 158.160.134.200
 
 Frontend https://romantikhonov.mesto.nomoredomainsmonster.ru
 
