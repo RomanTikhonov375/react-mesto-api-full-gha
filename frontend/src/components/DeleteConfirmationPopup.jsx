@@ -7,7 +7,6 @@ export default function DeleteConfirmationPopup(props) {
         const isValid = true; // Костыль , для сдачи работы, после проверки переделаю все формы с помощью react-hook-form
 
         function handleDelete(e) {
-            console.log(props)
             e.preventDefault();
             props.onCardDelete(props.card, props.setCards)
         }

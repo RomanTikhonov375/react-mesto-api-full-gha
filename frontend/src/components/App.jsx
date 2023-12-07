@@ -20,7 +20,6 @@ import { login, register, checkToken } from '../utils/auth.js';
 import InfoTooltip from './InfoTooltip';
 import ProtectedRouteElement from './ProtectedRouteElement.jsx';
 
-// - 4 часа на поиск неисправности в добавлении 2х карточек ^_^
 
 function App() {
 
@@ -125,12 +124,20 @@ function App() {
         }
         navigate('/sign-in')
       })
+      Promise.all([api.getInitialCards(), api.getUserInfo()])
+      .then(([cardsData, userData]) => {
+        setCards(cardsData);
+        setCurrentUser(userData)
+      })
+      .catch((err)=> console.error(err));
     };
-    api.getInitialCards()
-    .then(setCards).catch(console.error);
-     api.getUserInfo()
-    .then(setCurrentUser).catch(console.error);
+    // api.getInitialCards()
+    // .then(setCards).catch(console.error);
+    //  api.getUserInfo()
+    // .then(setCurrentUser).catch(console.error);
   },[navigate,loggedIn])
+
+
 
 
   // Колбэк для логина пользователя
